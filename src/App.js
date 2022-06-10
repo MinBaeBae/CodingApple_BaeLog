@@ -11,6 +11,7 @@ function App() {
 	let [thumbsUp, setThumbsUp] = useState([0, 0, 0]);
 	let [modal, setModal] = useState(false);
 	let [postTitle, setPostTitle] = useState(0);
+	let [inputValue, setInputValue] = useState("");
 
 	return (
 		<div className="App">
@@ -29,7 +30,8 @@ function App() {
 						>
 							{글제목}{" "}
 							<span
-								onClick={() => {
+								onClick={(e) => {
+									e.stopPropagation();
 									let copyThumb = [...thumbsUp];
 									copyThumb[i] = copyThumb[i] + 1;
 									setThumbsUp(copyThumb);
@@ -40,9 +42,33 @@ function App() {
 							{thumbsUp[i]}
 						</h4>
 						<p>2월 17일 발행</p>
+						<button
+							onClick={() => {
+								let copy = [...title];
+								copy.splice(i, 1);
+								setTitle(copy);
+							}}
+						>
+							글 삭제
+						</button>
 					</div>
 				);
 			})}
+
+			<input
+				onChange={(e) => {
+					setInputValue(e.target.value);
+				}}
+			/>
+			<button
+				onClick={() => {
+					let copy = [...title];
+					copy.unshift(inputValue);
+					setTitle(copy);
+				}}
+			>
+				글 작성
+			</button>
 			{/* <div className="list">
 				<h4>
 					{title[0]}{" "}
